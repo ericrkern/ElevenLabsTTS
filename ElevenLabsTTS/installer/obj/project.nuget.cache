@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "m7/SYgg30Z4=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\ElevenLabsTTS\\ElevenLabsTTS\\installer\\Setup.wixproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\SMF_A\\.nuget\\packages\\wixtoolset.ui.wixext\\6.0.0\\wixtoolset.ui.wixext.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

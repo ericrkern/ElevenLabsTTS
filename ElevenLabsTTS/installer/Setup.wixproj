@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="WixToolset.Sdk/6.0.0">
+  <PropertyGroup>
+    <OutputName>ElevenLabsTTS-Setup</OutputName>
+    <OutputType>Package</OutputType>
+    <SourceDir>..\ElevenLabsTTS\bin\Release\net8.0-windows\</SourceDir>
+    <DefineConstants>SourceDir=$(SourceDir)</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.UI.wixext" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <HarvestDirectory Include="$(SourceDir)">
+      <ComponentGroupName>PublishedComponents</ComponentGroupName>
+      <DirectoryRefId>INSTALLFOLDER</DirectoryRefId>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+      <GenerateGuidsNow>true</GenerateGuidsNow>
+    </HarvestDirectory>
+  </ItemGroup>
+</Project> 

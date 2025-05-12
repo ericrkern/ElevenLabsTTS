@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+    
+    <Package Name="ElevenLabs TTS" 
+             Language="1033" 
+             Version="1.0.0" 
+             Manufacturer="ElevenLabs TTS"
+             UpgradeCode="4F066D87-1698-4A1A-9FF5-F8B8E2F7C666">
+
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+        <Feature Id="ProductFeature" Title="ElevenLabs TTS" Level="1">
+            <ComponentGroupRef Id="PublishedComponents" />
+            <ComponentRef Id="ApplicationShortcut" />
+        </Feature>
+
+        <!-- Add UI -->
+        <ui:WixUI Id="WixUI_Minimal" />
+        <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+
+        <StandardDirectory Id="ProgramFiles6432Folder">
+            <Directory Id="INSTALLFOLDER" Name="ElevenLabs TTS" />
+        </StandardDirectory>
+
+        <StandardDirectory Id="ProgramMenuFolder">
+            <Directory Id="ApplicationProgramsFolder" Name="ElevenLabs TTS">
+                <Component Id="ApplicationShortcut" Guid="90123456-9012-9012-9012-901234567890">
+                    <Shortcut Id="ApplicationStartMenuShortcut" 
+                              Name="ElevenLabs TTS"
+                              Description="ElevenLabs Text-to-Speech Application"
+                              Target="[INSTALLFOLDER]ElevenLabsTTS.exe"
+                              WorkingDirectory="INSTALLFOLDER"/>
+                    <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+                    <RegistryValue Root="HKCU" Key="Software\ElevenLabsTTS" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+                </Component>
+            </Directory>
+        </StandardDirectory>
+    </Package>
+</Wix> 
