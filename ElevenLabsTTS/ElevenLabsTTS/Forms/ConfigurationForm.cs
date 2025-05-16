@@ -65,10 +65,10 @@ namespace ElevenLabsTTS
         private void InitializeComponent()
         {
             this.Text = "Configuration";
-            this.Size = new Size(750, 800);
+            this.Size = new Size(800, 900);
             this.StartPosition = FormStartPosition.CenterParent;
             this.FormBorderStyle = FormBorderStyle.Sizable;
-            this.MinimumSize = new Size(700, 600);
+            this.MinimumSize = new Size(750, 700);
             this.MaximizeBox = true;
             this.MinimizeBox = true;
             this.FormClosing += ConfigurationForm_FormClosing;
@@ -107,8 +107,8 @@ namespace ElevenLabsTTS
             int labelWidth = 160;
             int controlSpacing = 25;
             int controlWidth = Math.Min(450, this.ClientSize.Width - 200);
-            int verticalSpacing = 60; // Increased from 50 to accommodate larger sliders
-            int sectionSpacing = 60; // Increased from 50
+            int verticalSpacing = 80; // Increased from 60 to provide more space between sliders
+            int sectionSpacing = 80; // Increased from 60
             int leftMargin = 40;
             int textBoxHeight = 35;
             
@@ -172,7 +172,7 @@ namespace ElevenLabsTTS
             volumeSlider = new AccessibleTrackBar
             {
                 Location = new Point(leftMargin + labelWidth + controlSpacing, currentY),
-                Size = new Size(controlWidth - 50, 65), // Increased height for better touch targets
+                Size = new Size(controlWidth - 50, 85), // Increased height to match other sliders
                 Minimum = 0,
                 Maximum = 100,
                 Value = 100,
@@ -196,7 +196,7 @@ namespace ElevenLabsTTS
                 TextAlign = ContentAlignment.MiddleLeft // Better alignment
             };
             mainPanel.Controls.Add(volumeLabel);
-            currentY += verticalSpacing + 30; // Added extra spacing due to larger slider height
+            currentY += verticalSpacing + 20; // Added extra spacing due to larger slider height
 
             // Voice Boost Parameters Section Header
             AddLabel("Voice Boost Parameters", leftMargin, currentY, controlWidth);
@@ -277,7 +277,7 @@ namespace ElevenLabsTTS
             voiceSelector.SelectedIndexChanged += VoiceSelector_SelectedIndexChanged;
 
             // Set panel's virtual size
-            mainPanel.AutoScrollMinSize = new Size(0, currentY + 100);
+            mainPanel.AutoScrollMinSize = new Size(0, currentY + 150); // Increased padding at the bottom
         }
 
         private Label AddLabel(string text, int x, int y, int width)
@@ -327,7 +327,7 @@ namespace ElevenLabsTTS
             var trackBar = new AccessibleTrackBar
             {
                 Location = new Point(x, y),
-                Size = new Size(width, 65), // Increased height for better touch targets
+                Size = new Size(width, 85), // Increased height for even bigger touch targets
                 Minimum = 0,
                 Maximum = 100,
                 Value = 50,
@@ -696,6 +696,17 @@ namespace ElevenLabsTTS
                 using (var pen = new Pen(Color.FromArgb(80, 80, 80), 2))
                 {
                     e.Graphics.DrawRectangle(pen, 0, 0, Width - 1, Height - 1);
+                }
+            }
+
+            // Override CreateParams to make the thumb larger
+            protected override CreateParams CreateParams
+            {
+                get
+                {
+                    CreateParams cp = base.CreateParams;
+                    cp.Style |= 0x40; // Increase thumb size (TBS_FIXEDLENGTH)
+                    return cp;
                 }
             }
         }
