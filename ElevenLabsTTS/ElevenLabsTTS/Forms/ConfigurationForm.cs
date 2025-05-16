@@ -681,16 +681,18 @@ namespace ElevenLabsTTS
         {
             public AccessibleTrackBar() : base()
             {
-                SetStyle(ControlStyles.UserPaint, true);
+                // Don't override user paint as it causes the thumb to disappear
+                // Instead just enable double buffering for smoother painting
+                SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
                 DoubleBuffered = true;
             }
 
             protected override void OnPaint(PaintEventArgs e)
             {
+                // Call base implementation first to draw the default trackbar with thumb
                 base.OnPaint(e);
                 
-                // Make the slider thumb larger and more visible
-                // This code draws a border around the control to make its boundaries clear
+                // Add our custom border around the control for better visibility
                 using (var pen = new Pen(Color.FromArgb(80, 80, 80), 2))
                 {
                     e.Graphics.DrawRectangle(pen, 0, 0, Width - 1, Height - 1);
