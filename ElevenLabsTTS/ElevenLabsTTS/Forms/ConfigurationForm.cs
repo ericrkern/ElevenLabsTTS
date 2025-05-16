@@ -6,6 +6,7 @@ using NAudio.Wave;
 using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 
 namespace ElevenLabsTTS
 {
@@ -106,8 +107,8 @@ namespace ElevenLabsTTS
             int labelWidth = 160;
             int controlSpacing = 25;
             int controlWidth = Math.Min(450, this.ClientSize.Width - 200);
-            int verticalSpacing = 50;
-            int sectionSpacing = 50;
+            int verticalSpacing = 60; // Increased from 50 to accommodate larger sliders
+            int sectionSpacing = 60; // Increased from 50
             int leftMargin = 40;
             int textBoxHeight = 35;
             
@@ -168,16 +169,21 @@ namespace ElevenLabsTTS
 
             // Volume Control
             AddLabel("Volume:", leftMargin, currentY, labelWidth);
-            volumeSlider = new TrackBar
+            volumeSlider = new AccessibleTrackBar
             {
                 Location = new Point(leftMargin + labelWidth + controlSpacing, currentY),
-                Size = new Size(controlWidth - 50, 45),
+                Size = new Size(controlWidth - 50, 65), // Increased height for better touch targets
                 Minimum = 0,
                 Maximum = 100,
                 Value = 100,
-                TickFrequency = 10,
-                TickStyle = TickStyle.Both
+                TickFrequency = 5, // More frequent ticks for better visual feedback
+                TickStyle = TickStyle.Both,
+                LargeChange = 10, // Larger steps with keyboard/button navigation
+                SmallChange = 1,
+                AutoSize = false
             };
+            // Set the control to allow focus for keyboard accessibility
+            volumeSlider.TabStop = true;
             volumeSlider.ValueChanged += VolumeSlider_ValueChanged;
             mainPanel.Controls.Add(volumeSlider);
 
@@ -185,11 +191,12 @@ namespace ElevenLabsTTS
             {
                 Text = "100%",
                 Location = new Point(volumeSlider.Right + 10, currentY + 8),
-                Size = new Size(40, textBoxHeight),
-                Font = new Font("Segoe UI", 10F, FontStyle.Bold)
+                Size = new Size(60, 35), // Wider to fit values better
+                Font = new Font("Segoe UI", 11F, FontStyle.Bold), // Larger font
+                TextAlign = ContentAlignment.MiddleLeft // Better alignment
             };
             mainPanel.Controls.Add(volumeLabel);
-            currentY += verticalSpacing + 20;
+            currentY += verticalSpacing + 30; // Added extra spacing due to larger slider height
 
             // Voice Boost Parameters Section Header
             AddLabel("Voice Boost Parameters", leftMargin, currentY, controlWidth);
@@ -317,16 +324,23 @@ namespace ElevenLabsTTS
 
         private TrackBar AddTrackBar(int x, int y, int width)
         {
-            var trackBar = new TrackBar
+            var trackBar = new AccessibleTrackBar
             {
                 Location = new Point(x, y),
-                Size = new Size(width, 45),
+                Size = new Size(width, 65), // Increased height for better touch targets
                 Minimum = 0,
                 Maximum = 100,
                 Value = 50,
-                TickFrequency = 10,
-                TickStyle = TickStyle.Both
+                TickFrequency = 5, // More frequent ticks for better visual feedback
+                TickStyle = TickStyle.Both,
+                LargeChange = 10, // Larger steps with keyboard/button navigation
+                SmallChange = 1,
+                AutoSize = false
             };
+            
+            // Set the control to allow focus for keyboard accessibility
+            trackBar.TabStop = true;
+            
             mainPanel.Controls.Add(trackBar);
             return trackBar;
         }
@@ -337,8 +351,9 @@ namespace ElevenLabsTTS
             {
                 Text = initialValue,
                 Location = new Point(x, y),
-                Size = new Size(40, 35),
-                Font = new Font("Segoe UI", 10F, FontStyle.Bold)
+                Size = new Size(60, 35), // Wider to fit values with % symbol better
+                Font = new Font("Segoe UI", 11F, FontStyle.Bold), // Larger font
+                TextAlign = ContentAlignment.MiddleLeft // Better text alignment
             };
             mainPanel.Controls.Add(label);
             return label;
@@ -658,6 +673,28 @@ namespace ElevenLabsTTS
             {
                 MessageBox.Show($"Error saving configuration: {ex.Message}\n\nStack Trace: {ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 statusLabel.Text = "Error saving configuration.";
+            }
+        }
+
+        // Custom TrackBar with improved accessibility features
+        private class AccessibleTrackBar : TrackBar
+        {
+            public AccessibleTrackBar() : base()
+            {
+                SetStyle(ControlStyles.UserPaint, true);
+                DoubleBuffered = true;
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                base.OnPaint(e);
+                
+                // Make the slider thumb larger and more visible
+                // This code draws a border around the control to make its boundaries clear
+                using (var pen = new Pen(Color.FromArgb(80, 80, 80), 2))
+                {
+                    e.Graphics.DrawRectangle(pen, 0, 0, Width - 1, Height - 1);
+                }
             }
         }
     }
