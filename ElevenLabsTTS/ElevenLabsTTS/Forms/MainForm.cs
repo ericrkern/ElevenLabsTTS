@@ -13,6 +13,7 @@ namespace ElevenLabsTTS
         private Button copyButton;
         private Button stopButton;
         private Button configButton;
+        private Button clearButton;
         private Label statusLabel;
 
         private Configuration _config;
@@ -33,7 +34,7 @@ namespace ElevenLabsTTS
         private void InitializeComponent()
         {
             this.Text = "Eleven Labs TTS";
-            this.Size = new Size(850, 650);
+            this.Size = new Size(950, 650);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormClosing += MainForm_FormClosing;
         }
@@ -45,10 +46,22 @@ namespace ElevenLabsTTS
             {
                 Multiline = true,
                 ScrollBars = ScrollBars.Vertical,
-                Location = new Point(20, 20),
-                Size = new Size(740, 400),
+                Location = new Point(20, 90),
+                Size = new Size(740, 330),
                 Font = new Font("Segoe UI", 12F)
             };
+
+            // Clear button
+            clearButton = new Button
+            {
+                Text = "Clear",
+                Location = new Point(20, 20),
+                Size = new Size(150, 60),
+                Font = new Font("Segoe UI", 10F),
+                TextAlign = ContentAlignment.MiddleCenter,
+                AutoEllipsis = true
+            };
+            clearButton.Click += ClearButton_Click;
 
             // Speak button
             speakButton = new Button
@@ -119,7 +132,7 @@ namespace ElevenLabsTTS
             {
                 Text = "Ready",
                 Location = new Point(20, 520),
-                Size = new Size(790, 60),
+                Size = new Size(910, 60),
                 Font = new Font("Segoe UI", 10F),
                 AutoSize = false,
                 TextAlign = ContentAlignment.MiddleCenter
@@ -128,11 +141,12 @@ namespace ElevenLabsTTS
             this.Controls.AddRange(new Control[]
             {
                 textInput, 
+                clearButton,
                 speakButton,
                 stopButton,
                 saveAudioButton,
                 copyButton,
-                configButton, 
+                configButton,
                 statusLabel 
             });
         }
@@ -271,7 +285,7 @@ namespace ElevenLabsTTS
                 string voiceName = _config.SelectedVoiceName.Replace(" ", "");
                 if (string.IsNullOrEmpty(voiceName)) voiceName = "voice";
                 
-                string fileName = $"{voiceName}_{_config.LastFileNumber:D3}.{_config.OutputFormat.ToLower()}";
+                string fileName = $"{voiceName}_{_config.LastFileNumber:D3}.mp3";
 
                 var saveFileDialog = new SaveFileDialog
                 {
@@ -303,10 +317,10 @@ namespace ElevenLabsTTS
 
             try
             {
-                // Create a temporary file with the correct extension
+                // Create a temporary file with mp3 extension
                 string tempFile = Path.Combine(
                     Path.GetTempPath(),
-                    $"voice_{DateTime.Now:yyyyMMddHHmmss}.{_config.OutputFormat.ToLower()}"
+                    $"voice_{DateTime.Now:yyyyMMddHHmmss}.mp3"
                 );
                 
                 File.WriteAllBytes(tempFile, currentAudioData);
@@ -379,6 +393,12 @@ namespace ElevenLabsTTS
             return _config.OutputFormat.StartsWith("mp3") 
                 ? "MP3 Files (*.mp3)|*.mp3" 
                 : "WAV Files (*.wav)|*.wav";
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            textInput.Text = string.Empty;
+            statusLabel.Text = "Text cleared";
         }
     }
 } 

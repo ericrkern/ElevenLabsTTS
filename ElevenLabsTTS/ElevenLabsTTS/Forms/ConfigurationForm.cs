@@ -54,6 +54,10 @@ namespace ElevenLabsTTS
             InitializeComponent();
             InitializeUI();
             _config = config;
+            if (!string.IsNullOrEmpty(_config?.ApiKey))
+            {
+                _api = new ElevenLabsApi(_config.ApiKey);
+            }
             _ = LoadConfigurationFromInstance();
         }
 
@@ -454,8 +458,17 @@ namespace ElevenLabsTTS
         {
             try
             {
+                if (string.IsNullOrEmpty(apiKeyInput.Text))
+                {
+                    MessageBox.Show("Please enter an API key first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 loadVoicesButton.Enabled = false;
                 statusLabel.Text = "Loading voices...";
+                
+                // Always create a new API instance with the current API key
+                _api = new ElevenLabsApi(apiKeyInput.Text);
                 
                 _voices = await _api.GetVoicesAsync();
                 
@@ -479,7 +492,7 @@ namespace ElevenLabsTTS
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading voices: {ex.Message}\n\nStack Trace: {ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error loading voices: {ex.Message}\n\nPlease make sure your API key is correct.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 statusLabel.Text = "Error loading voices.";
             }
             finally
