@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.IO;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace ElevenLabsTTS.Models
 {
@@ -17,6 +18,19 @@ namespace ElevenLabsTTS.Models
         public int Speed { get; set; } = 50;
         public string OutputFormat { get; set; } = "mp3_44100_192";
         public int LastFileNumber { get; set; } = 0;
+        public string Language { get; set; } = "English"; // Default language is English
+
+        // Dictionary of supported languages and their codes for ElevenLabs API
+        public static readonly Dictionary<string, string> SupportedLanguages = new Dictionary<string, string>
+        {
+            { "English", "en" },
+            { "French", "fr" },
+            { "Spanish", "es" },
+            { "Italian", "it" },
+            { "German", "de" },
+            { "Dutch", "nl" },
+            { "Chinese", "zh" }
+        };
 
         private static readonly string ConfigFilePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),

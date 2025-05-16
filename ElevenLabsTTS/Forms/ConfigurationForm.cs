@@ -16,6 +16,7 @@ namespace ElevenLabsTTS
         private TextBox apiKeyInput;
         private ComboBox voiceSelector;
         private ComboBox modelSelector;
+        private ComboBox languageSelector;
         private TrackBar stabilitySlider;
         private TrackBar similarityBoostSlider;
         private TrackBar styleSlider;
@@ -105,6 +106,11 @@ namespace ElevenLabsTTS
             // Model Selection
             var modelLabel = AddLabel("Model:", leftMargin, currentY, labelWidth);
             modelSelector = AddComboBox(leftMargin + labelWidth + controlSpacing, currentY, controlWidth);
+            currentY += verticalSpacing + sectionSpacing;
+
+            // Language Selection
+            var languageLabel = AddLabel("Language:", leftMargin, currentY, labelWidth);
+            languageSelector = AddComboBox(leftMargin + labelWidth + controlSpacing, currentY, controlWidth);
             currentY += verticalSpacing + sectionSpacing;
 
             // Voice Settings Section
@@ -317,6 +323,111 @@ namespace ElevenLabsTTS
             };
             mainPanel.Controls.Add(button);
             return button;
+        }
+
+        private void InitializeControlValues()
+        {
+            // Initialize model selector
+            modelSelector.Items.Clear();
+            modelSelector.Items.AddRange(new string[] {
+                "eleven_multilingual_v2",
+                "eleven_monolingual_v1",
+                "eleven_turbo_v2"
+            });
+
+            // Initialize language selector
+            languageSelector.Items.Clear();
+            foreach (var language in Configuration.SupportedLanguages.Keys)
+            {
+                languageSelector.Items.Add(language);
+            }
+
+            // Initialize output format selector
+            outputFormatSelector.Items.Clear();
+            outputFormatSelector.Items.AddRange(new string[] {
+                "mp3_44100_128",
+                "mp3_44100_192",
+                "pcm_16000",
+                "pcm_22050",
+                "pcm_24000",
+                "pcm_44100"
+            });
+
+            // Load configuration
+            LoadConfiguration();
+
+            // Configure trackbar events after values are set
+            stabilitySlider.ValueChanged += (s, e) => this.stabilityLabel.Text = stabilitySlider.Value.ToString();
+            similarityBoostSlider.ValueChanged += (s, e) => this.similarityBoostLabel.Text = similarityBoostSlider.Value.ToString();
+            styleSlider.ValueChanged += (s, e) => this.styleLabel.Text = styleSlider.Value.ToString();
+            speedSlider.ValueChanged += (s, e) => this.speedLabel.Text = speedSlider.Value.ToString();
+            volumeSlider.ValueChanged += (s, e) => this.volumeLabel.Text = volumeSlider.Value.ToString();
+
+            // Update labels with initial values
+            this.stabilityLabel.Text = stabilitySlider.Value.ToString();
+            this.similarityBoostLabel.Text = similarityBoostSlider.Value.ToString();
+            this.styleLabel.Text = styleSlider.Value.ToString();
+            this.speedLabel.Text = speedSlider.Value.ToString();
+            this.volumeLabel.Text = volumeSlider.Value.ToString();
+        }
+
+        private void LoadConfiguration()
+        {
+            apiKeyInput.Text = _config.ApiKey;
+            
+            // Set model
+            if (modelSelector.Items.Contains(_config.SelectedModel))
+            {
+                modelSelector.SelectedItem = _config.SelectedModel;
+            }
+            else if (modelSelector.Items.Count > 0)
+            {
+                modelSelector.SelectedIndex = 0;
+            }
+            
+            // Set language
+            if (!string.IsNullOrEmpty(_config.Language) && languageSelector.Items.Contains(_config.Language))
+            {
+                languageSelector.SelectedItem = _config.Language;
+            }
+            else if (languageSelector.Items.Count > 0)
+            {
+                languageSelector.SelectedItem = "English"; // Default to English
+            }
+            
+            // Set output format
+            if (outputFormatSelector.Items.Contains(_config.OutputFormat))
+            {
+                outputFormatSelector.SelectedItem = _config.OutputFormat;
+            }
+            else if (outputFormatSelector.Items.Count > 0)
+            {
+                outputFormatSelector.SelectedIndex = 0;
+            }
+            
+            // Set slider values
+            stabilitySlider.Value = _config.Stability;
+            similarityBoostSlider.Value = _config.SimilarityBoost;
+            styleSlider.Value = _config.Style;
+            speakerBoostCheckbox.Checked = _config.UseSpeakerBoost;
+            speedSlider.Value = _config.Speed;
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            _config.ApiKey = apiKeyInput.Text;
+            _config.SelectedModel = modelSelector.SelectedItem?.ToString() ?? "eleven_multilingual_v2";
+            _config.Language = languageSelector.SelectedItem?.ToString() ?? "English";
+            _config.Stability = stabilitySlider.Value;
+            _config.SimilarityBoost = similarityBoostSlider.Value;
+            _config.Style = styleSlider.Value;
+            _config.UseSpeakerBoost = speakerBoostCheckbox.Checked;
+            _config.Speed = speedSlider.Value;
+            _config.OutputFormat = outputFormatSelector.SelectedItem?.ToString() ?? "mp3_44100_192";
+            
+            _config.Save();
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 } 

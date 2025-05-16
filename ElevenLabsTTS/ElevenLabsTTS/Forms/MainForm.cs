@@ -205,13 +205,22 @@ namespace ElevenLabsTTS
 
                 var stability = _config.Stability / 100.0;
                 var speed = _config.Speed / 100.0;
+                
+                // Get language code from the configuration
+                string languageCode = "en"; // Default to English
+                if (!string.IsNullOrEmpty(_config.Language) && 
+                    Configuration.SupportedLanguages.TryGetValue(_config.Language, out var code))
+                {
+                    languageCode = code;
+                }
 
                 currentAudioData = await _api.TextToSpeechAsync(
                     textInput.Text,
                     _config.SelectedVoiceId,
                     _config.SelectedModel,
                     stability,
-                    speed
+                    speed,
+                    languageCode // Pass the language code
                 );
 
                 // Create temporary file for playback

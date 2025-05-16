@@ -36,7 +36,7 @@ namespace ElevenLabsTTS.Services
             }
         }
 
-        public async Task<byte[]> TextToSpeechAsync(string text, string voiceId, string model, double stability, double speed)
+        public async Task<byte[]> TextToSpeechAsync(string text, string voiceId, string model, double stability, double speed, string language = "en")
         {
             try
             {
@@ -48,7 +48,8 @@ namespace ElevenLabsTTS.Services
                     {
                         stability = stability,
                         similarity_boost = speed
-                    }
+                    },
+                    voice_language = language
                 };
 
                 var json = JsonConvert.SerializeObject(request);
