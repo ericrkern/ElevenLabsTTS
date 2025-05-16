@@ -44,3 +44,17 @@ The configuration screen provides:
 - Integrates with Eleven Labs API
 - Supports various audio output formats
 - Local configuration storage
+
+## Build for Windows
+The latest Windows build is available for download:
+- [ElevenLabsTTS_Build007.zip](https://github.com/ericrkern/ElevenLabsTTS/raw/master/ElevenLabsTTS/ElevenLabsTTS_Build007.zip)
+
+### Installation
+1. Download the zip file above
+2. Extract all contents to a folder of your choice
+3. Run the ElevenLabsTTS.exe file
+4. No installation required - the application is self-contained
+
+### System Requirements
+- Windows 10 or later
+- .NET runtime is included in the package (self-contained application)
