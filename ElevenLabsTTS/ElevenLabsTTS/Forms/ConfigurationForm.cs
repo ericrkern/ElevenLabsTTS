@@ -65,10 +65,10 @@ namespace ElevenLabsTTS
         private void InitializeComponent()
         {
             this.Text = "Configuration";
-            this.Size = new Size(800, 900);
+            this.Size = new Size(900, 900);
             this.StartPosition = FormStartPosition.CenterParent;
             this.FormBorderStyle = FormBorderStyle.Sizable;
-            this.MinimumSize = new Size(750, 700);
+            this.MinimumSize = new Size(850, 700);
             this.MaximizeBox = true;
             this.MinimizeBox = true;
             this.FormClosing += ConfigurationForm_FormClosing;
@@ -107,6 +107,7 @@ namespace ElevenLabsTTS
             int labelWidth = 160;
             int controlSpacing = 25;
             int controlWidth = Math.Min(450, this.ClientSize.Width - 200);
+            int sliderWidth = controlWidth - 110; // Reduced width to accommodate the arrow buttons
             int verticalSpacing = 80; // Increased from 60 to provide more space between sliders
             int sectionSpacing = 80; // Increased from 60
             int leftMargin = 40;
@@ -171,8 +172,8 @@ namespace ElevenLabsTTS
             AddLabel("Volume:", leftMargin, currentY, labelWidth);
             volumeSlider = new AccessibleTrackBar
             {
-                Location = new Point(leftMargin + labelWidth + controlSpacing, currentY),
-                Size = new Size(controlWidth - 50, 85), // Increased height to match other sliders
+                Location = new Point(leftMargin + labelWidth + controlSpacing + 45, currentY), // Shifted right to make room for left button
+                Size = new Size(sliderWidth, 85), // Reduced width
                 Minimum = 0,
                 Maximum = 100,
                 Value = 100,
@@ -190,7 +191,7 @@ namespace ElevenLabsTTS
             volumeLabel = new Label
             {
                 Text = "100%",
-                Location = new Point(volumeSlider.Right + 10, currentY + 8),
+                Location = new Point(volumeSlider.Right + 50, currentY + 8),
                 Size = new Size(60, 35), // Wider to fit values better
                 Font = new Font("Segoe UI", 11F, FontStyle.Bold), // Larger font
                 TextAlign = ContentAlignment.MiddleLeft // Better alignment
@@ -204,23 +205,23 @@ namespace ElevenLabsTTS
 
             // Stability Slider
             AddLabel("Stability:", leftMargin, currentY, labelWidth);
-            stabilitySlider = AddTrackBar(leftMargin + labelWidth + controlSpacing, currentY, controlWidth - 50);
-            stabilityLabel = AddValueLabel(stabilitySlider.Right + 10, currentY + 8, "50%");
-            stabilitySlider.ValueChanged += (s, e) => stabilityLabel.Text = $"{stabilitySlider.Value}%";
+            stabilitySlider = AddTrackBar(leftMargin + labelWidth + controlSpacing + 45, currentY, sliderWidth);
+            stabilityLabel = AddValueLabel(stabilitySlider.Right + 50, currentY + 8, "50%");
+            AddSliderButtons(stabilitySlider, (value) => stabilityLabel.Text = $"{value}%");
             currentY += verticalSpacing;
 
             // Similarity Boost Slider
             AddLabel("Similarity:", leftMargin, currentY, labelWidth);
-            similarityBoostSlider = AddTrackBar(leftMargin + labelWidth + controlSpacing, currentY, controlWidth - 50);
-            similarityBoostLabel = AddValueLabel(similarityBoostSlider.Right + 10, currentY + 8, "75%");
-            similarityBoostSlider.ValueChanged += (s, e) => similarityBoostLabel.Text = $"{similarityBoostSlider.Value}%";
+            similarityBoostSlider = AddTrackBar(leftMargin + labelWidth + controlSpacing + 45, currentY, sliderWidth);
+            similarityBoostLabel = AddValueLabel(similarityBoostSlider.Right + 50, currentY + 8, "75%");
+            AddSliderButtons(similarityBoostSlider, (value) => similarityBoostLabel.Text = $"{value}%");
             currentY += verticalSpacing;
 
             // Style Slider
             AddLabel("Style:", leftMargin, currentY, labelWidth);
-            styleSlider = AddTrackBar(leftMargin + labelWidth + controlSpacing, currentY, controlWidth - 50);
-            styleLabel = AddValueLabel(styleSlider.Right + 10, currentY + 8, "0%");
-            styleSlider.ValueChanged += (s, e) => styleLabel.Text = $"{styleSlider.Value}%";
+            styleSlider = AddTrackBar(leftMargin + labelWidth + controlSpacing + 45, currentY, sliderWidth);
+            styleLabel = AddValueLabel(styleSlider.Right + 50, currentY + 8, "0%");
+            AddSliderButtons(styleSlider, (value) => styleLabel.Text = $"{value}%");
             currentY += verticalSpacing;
 
             // Speaker Boost Checkbox
@@ -237,10 +238,13 @@ namespace ElevenLabsTTS
 
             // Speed Slider
             AddLabel("Speed:", leftMargin, currentY, labelWidth);
-            speedSlider = AddTrackBar(leftMargin + labelWidth + controlSpacing, currentY, controlWidth - 50);
-            speedLabel = AddValueLabel(speedSlider.Right + 10, currentY + 8, "50%");
-            speedSlider.ValueChanged += (s, e) => speedLabel.Text = $"{speedSlider.Value}%";
+            speedSlider = AddTrackBar(leftMargin + labelWidth + controlSpacing + 45, currentY, sliderWidth);
+            speedLabel = AddValueLabel(speedSlider.Right + 50, currentY + 8, "50%");
+            AddSliderButtons(speedSlider, (value) => speedLabel.Text = $"{value}%");
             currentY += verticalSpacing + 30;
+
+            // Volume slider (add buttons to it as well)
+            AddSliderButtons(volumeSlider, (value) => volumeLabel.Text = $"{value}%");
 
             // Status Label
             statusLabel = new Label
@@ -709,6 +713,58 @@ namespace ElevenLabsTTS
                     return cp;
                 }
             }
+        }
+
+        // Add a method to create arrow buttons for sliders
+        private void AddSliderButtons(TrackBar slider, Action<int> updateLabelAction)
+        {
+            // Left decrease button
+            Button decreaseButton = new Button
+            {
+                Text = "◄",
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                Size = new Size(40, 40),
+                Location = new Point(slider.Left - 45, slider.Top + (slider.Height - 40) / 2),
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            
+            // Right increase button
+            Button increaseButton = new Button
+            {
+                Text = "►",
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                Size = new Size(40, 40),
+                Location = new Point(slider.Right + 5, slider.Top + (slider.Height - 40) / 2),
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            
+            // Add click events
+            decreaseButton.Click += (s, e) => 
+            {
+                if (slider.Value > slider.Minimum)
+                {
+                    slider.Value--;
+                    updateLabelAction(slider.Value);
+                }
+            };
+            
+            increaseButton.Click += (s, e) => 
+            {
+                if (slider.Value < slider.Maximum)
+                {
+                    slider.Value++;
+                    updateLabelAction(slider.Value);
+                }
+            };
+            
+            // Add ValueChanged event to ensure label updates when slider changes via mouse or keyboard
+            slider.ValueChanged += (s, e) => updateLabelAction(slider.Value);
+            
+            // Add buttons to panel
+            mainPanel.Controls.Add(decreaseButton);
+            mainPanel.Controls.Add(increaseButton);
         }
     }
 } 
