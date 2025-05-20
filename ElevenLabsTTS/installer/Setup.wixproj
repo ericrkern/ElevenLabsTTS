@@ -3,8 +3,10 @@
   <PropertyGroup>
     <OutputName>ElevenLabsTTS-Setup</OutputName>
     <OutputType>Package</OutputType>
-    <SourceDir>..\ElevenLabsTTS\bin\Release\net8.0-windows\</SourceDir>
+    <SourceDir>..\temp-build\</SourceDir>
     <DefineConstants>SourceDir=$(SourceDir)</DefineConstants>
+    <SignOutput>true</SignOutput>
+    <OutputPath>..\bin\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="WixToolset.UI.wixext" Version="6.0.0" />
@@ -17,4 +19,9 @@
       <GenerateGuidsNow>true</GenerateGuidsNow>
     </HarvestDirectory>
   </ItemGroup>
+
+  <!-- Add SignTool as a post-build action -->
+  <Target Name="SignMsi" AfterTargets="Build" Condition="'$(SignOutput)'=='true'">
+    <Exec Command="signtool sign /d &quot;ElevenLabs TTS&quot; /du &quot;https://scottmorgan.foundation&quot; /tr http://timestamp.digicert.com /td sha256 /fd sha256 &quot;$(OutputPath)$(OutputName).msi&quot;" />
+  </Target>
 </Project> 
