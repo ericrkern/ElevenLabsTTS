@@ -1,5 +1,5 @@
 #define AppName "ElevenLabs TTS"
-#define AppVersion "1.0.7"
+#define AppVersion "1.0.8"
 #define AppPublisher "The Scott-Morgan Foundation"
 #define AppURL "https://scottmorgan.foundation"
 #define AppExeName "ElevenLabsTTS.exe"

@@ -4,7 +4,7 @@
     
     <Package Name="ElevenLabs TTS" 
              Language="1033" 
-             Version="1.0.7" 
+             Version="1.0.8" 
              Manufacturer="The Scott-Morgan Foundation"
              UpgradeCode="4F066D87-1698-4A1A-9FF5-F8B8E2F7C666">
 

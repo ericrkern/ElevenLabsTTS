@@ -15,7 +15,7 @@ $pfxPath = Join-Path $baseDir "signing\ElevenLabsTTS.pfx"
 $pfxPassword = "ElevenLabsTTS"
 $timestampServer = "http://timestamp.digicert.com"
 $outputMsi = Join-Path $outputDir "ElevenLabsTTS-Setup.msi"
-$appVersion = "1.0.7"
+$appVersion = "1.0.8"
 
 # Step 1: Validate temp-build directory
 if (!(Test-Path (Join-Path $tempDir "ElevenLabsTTS.exe"))) {

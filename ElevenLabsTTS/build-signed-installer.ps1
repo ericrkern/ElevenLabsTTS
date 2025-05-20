@@ -12,7 +12,7 @@ $tempDir = Join-Path $baseDir "temp-build"
 $pfxPath = Join-Path $baseDir "signing\ElevenLabsTTS.pfx"
 $pfxPassword = "ElevenLabsTTS"
 $timestampServer = "http://timestamp.digicert.com"
-$appVersion = "1.0.7"
+$appVersion = "1.0.8"
 $certThumbprint = "45F573EAE275ECFF6F8681379E193501F8C7F561" # Specific thumbprint to avoid multiple certificate issues
 $zipFile = Get-ChildItem -Path $baseDir -Filter "ElevenLabsTTS_Build*.zip" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 
