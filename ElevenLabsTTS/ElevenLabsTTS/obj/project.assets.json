@@ -537,11 +537,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\SMF-ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj",
+      "projectUniqueName": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\SMF-ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj",
       "projectName": "ElevenLabsTTS",
-      "projectPath": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\SMF-ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj",
+      "projectPath": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\SMF-ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj",
       "packagesPath": "C:\\Users\\SMF_A\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\SMF-ElevenLabsTTS\\ElevenLabsTTS\\obj\\",
+      "outputPath": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\SMF-ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
