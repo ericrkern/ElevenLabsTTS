@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\SMF-ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj": {}
+    "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\SMF-ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj": {
-      "version": "1.0.0",
+    "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj": {
+      "version": "1.0.3",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\SMF-ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj",
+        "projectUniqueName": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj",
         "projectName": "ElevenLabsTTS",
-        "projectPath": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\SMF-ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj",
+        "projectPath": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS.csproj",
         "packagesPath": "C:\\Users\\SMF_A\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\SMF-ElevenLabsTTS\\ElevenLabsTTS\\obj\\",
+        "outputPath": "C:\\Users\\SMF_A\\OneDrive\\Documents\\GitHub\\ElevenLabsTTS\\ElevenLabsTTS\\ElevenLabsTTS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -70,6 +70,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[8.0.17, 8.0.17]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[8.0.17, 8.0.17]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[8.0.17, 8.0.17]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -78,7 +92,12 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
         }
       }
     }

@@ -12,11 +12,11 @@ using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("ElevenLabsTTS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f349e3687058b161c1f59de4872dbf1211d01fb")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.3.1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.3+12ec703d58068d57e1b678753dfe70cb02f9d672")]
 [assembly: System.Reflection.AssemblyProductAttribute("ElevenLabsTTS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ElevenLabsTTS")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.3.1")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
 

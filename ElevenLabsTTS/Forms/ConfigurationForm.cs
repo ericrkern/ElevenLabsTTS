@@ -345,7 +345,9 @@ namespace ElevenLabsTTS
             modelSelector.Items.AddRange(new string[] {
                 "eleven_multilingual_v2",
                 "eleven_flash_v2_5",
-                "eleven_turbo_v2_5"
+                "eleven_turbo_v2_5",
+                "eleven_v3",
+                "eleven_ttv_v3"
             });
             modelSelector.SelectedIndex = 0;
         }
